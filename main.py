@@ -39,5 +39,3 @@ panel = tk.Label(root)
 panel.pack(padx=10, pady=10)
 
 root.mainloop()
-
-
