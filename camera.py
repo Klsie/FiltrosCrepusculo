@@ -1,25 +1,35 @@
 import cv2
-from PIL import Image, ImageEnhance
+from sinCamera import filtro_crepusculo
 
-class Camera:
-    def __init__(self):
-        pass
+def capturar_con_filtro():
+    cap = cv2.VideoCapture(0)
+    if not cap.isOpened():
+        print("No se pudo acceder a la cámara.")
+        return
 
-    def tomar_foto(self):
-        cap = cv2.VideoCapture(0)  # 0 = cámara principal
+    print("Presiona 's' para tomar la foto, 'q' para salir.")
+    
+    while True:
         ret, frame = cap.read()
-        if ret:
-            cap.release()
-            # Aplicar efecto tipo "Crepúsculo"
-            twilight_frame = self.aplicar_filtro(frame)
-            return twilight_frame
-        else:
-            cap.release()
-            raise Exception("No se pudo capturar imagen")
+        if not ret:
+            print("Error capturando frame.")
+            break
+        
+        cv2.imshow("Vista previa - Presiona 's' para capturar", frame)
+        key = cv2.waitKey(1)
+        
+        if key == ord('s'):
+            foto = frame.copy()
+            break
+        elif key == ord('q'):
+            foto = None
+            break
 
-    def aplicar_filtro(self, imagen):
-        # Convertir a PIL para aplicar filtro sencillo
-        imagen_pil = Image.fromarray(cv2.cvtColor(imagen, cv2.COLOR_BGR2RGB))
-        enhancer = ImageEnhance.Color(imagen_pil)
-        imagen_filtrada = enhancer.enhance(1.5)  # más color (como estilo película)
-        return imagen_filtrada
+    cap.release()
+    cv2.destroyAllWindows()
+
+    if foto is not None:
+        foto_filtrada = filtro_crepusculo(foto)
+        cv2.imshow("Foto con Filtro Crepúsculo", foto_filtrada)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
