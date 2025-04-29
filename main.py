@@ -4,7 +4,7 @@ from camera import capturar_con_filtro
 
 def main():
     root = tk.Tk()
-    root.title("Filtro Crepúsculo")
+    root.title("Filtro Crepusculo")
     root.geometry("300x150")
 
     btn_archivo = tk.Button(root, text="Subir Imagen", command=cargar_y_filtrar, width=25, height=2)

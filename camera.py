@@ -1,5 +1,6 @@
 import cv2
 from sinCamera import filtro_crepusculo
+from sinCamera import musiquita, detener_musica
 
 def capturar_con_filtro():
     cap = cv2.VideoCapture(0)
@@ -30,6 +31,8 @@ def capturar_con_filtro():
 
     if foto is not None:
         foto_filtrada = filtro_crepusculo(foto)
-        cv2.imshow("Foto con Filtro Crepúsculo", foto_filtrada)
+        musiquita()
+        cv2.imshow("Foto con Filtro Crepusculo", foto_filtrada)
         cv2.waitKey(0)
+        detener_musica()
         cv2.destroyAllWindows()
